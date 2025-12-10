@@ -1,2 +1,47 @@
 Ecrire ici votre réponse à la question UML.
 
+Premier diagramme UML
+
+Avantages :
+
+- Le diagramme utilise des associations très explicites, en particulier la relation entre les classes Repetition, Termination et Event. Cela rend le modèle plus modulaire et flexible, facilitant l'extension pour ajouter des fonctionnalités.
+
+- La classe Repetition et la classe Termination sont bien définies et permettent une gestion claire des événements répétitifs et des événements à date de fin. Les méthodes comme setRepetition et setTermination sont clairement visibles.
+
+- La gestion des exceptions avec addException est explicitement visible, permettant de définir des jours où un événement ne se produit pas.
+
+- Le diagramme met l’accent sur des responsabilités bien distinctes pour chaque classe (répétition, fin d'événement, exception).
+
+Inconvénients :
+
+- Le modèle est plus complexe, avec plusieurs classes interconnectées, ce qui peut rendre la gestion des événements un peu plus lourde à implémenter et à maintenir, surtout si de nouveaux types d'événements doivent être ajoutés.
+
+- Contrairement au l'autre diagramme, le diagramme n'utilise pas un héritage aussi clair entre les différentes classes, ce qui pourrait rendre la gestion de la hiérarchie des événements plus difficile. Par exemple, il n'est pas immédiatement évident comment un RepetitiveEvent serait différent d'un Event.
+
+- Certains aspects comme la gestion de la fréquence des répétitions et des terminologies semblent légèrement redondants dans le diagramme.
+
+
+
+Deuxième diagramme UML (other)
+
+Avantages :
+
+- Le diagramme montre clairement une hiérarchie d'héritage entre les classes Event, RepetitiveEvent et FixedTerminationEvent, ce qui permet de structurer les événements en fonction de leur nature .
+
+- Il y a un focus sur les événements en général avec des opérations de base comme addEvent, eventsInDay, et isInDay, ce qui permet une gestion simple et directe des événements.
+
+- La séparation entre Event et RepetitiveEvent est bien faite. Un événement répétitif étend un événement classique avec des propriétés supplémentaires, ce qui est bien pour les comportements spécifiques.
+
+Inconvénients :
+
+- Bien que l'héritage soit bien défini, la relation entre les exceptions et les événements n'est pas explicitement visualisée. Le diagramme ne montre pas bien comment les événements exceptionnels peuvent être ajoutés ou gérés.
+
+- Bien que la classe FixedTerminationEvent soit mentionnée, il n'y a pas de détails suffisants sur les aspects terminaux des événements, ce qui pourrait rendre difficile la gestion d'événements à durée déterminée.
+
+- La gestion des événements répétitifs est suggérée mais n'est pas très détaillée, ce qui pourrait poser problème dans des cas d’utilisation plus complexes.
+
+Conclusion
+
+* Pour un modèle plus flexible et complet, le premier diagramme sera préférable.
+
+* Pour un modèle simple et direct, le deuxième diagramme semble plus adapté.

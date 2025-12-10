@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AgendaTest {
+public class AgendaTestSupp {
     Agenda agenda;
 
     // November 1st, 2020
@@ -66,10 +66,55 @@ public class AgendaTest {
         agenda.addEvent(neverEnding);
     }
 
+
+    // Tests pour findByTitle()
     @Test
-    public void testMultipleEventsInDay() {
-        assertEquals(4, agenda.eventsInDay(nov_1_2020).size(),
-                "Il y a 4 événements ce jour là");
-        assertTrue(agenda.eventsInDay(nov_1_2020).contains(neverEnding));
+    public void testFindByTitle() {
+        List<Event> found = agenda.findByTitle("Simple event");
+        assertEquals(1, found.size(), 
+                "Devrait trouver 1 événement avec ce titre");
+        assertTrue(found.contains(simple));
+    }
+
+    @Test
+    public void testFindByTitleMultipleResults() {
+        List<Event> found = agenda.findByTitle("Fixed termination weekly");
+        assertEquals(2, found.size(), 
+                "Devrait trouver 2 événements avec le même titre");
+    }
+
+    @Test
+    public void testFindByTitleNoMatch() {
+        List<Event> found = agenda.findByTitle("Inexistant");
+        assertTrue(found.isEmpty(), 
+                "Ne devrait trouver aucun événement");
+    }
+
+    // Tests pour isFreeFor()
+    @Test
+    public void testIsFreeForNonOverlapping() {
+        LocalDateTime morningTime = LocalDateTime.of(2020, 11, 1, 10, 0);
+        Event morningEvent = new Event("Morning", morningTime, Duration.ofMinutes(60));
+        
+        assertTrue(agenda.isFreeFor(morningEvent), 
+                "Devrait être libre le matin");
+    }
+
+    @Test
+    public void testIsNotFreeForOverlapping() {
+        LocalDateTime overlappingTime = LocalDateTime.of(2020, 11, 1, 23, 0);
+        Event overlapping = new Event("Overlap", overlappingTime, Duration.ofMinutes(60));
+        
+        assertFalse(agenda.isFreeFor(overlapping), 
+                "Ne devrait pas être libre (chevauchement)");
+    }
+
+    @Test
+    public void testIsFreeForConsecutive() {
+        LocalDateTime consecutiveTime = nov_1_2020_22_30.plus(min_120);
+        Event consecutive = new Event("Consecutive", consecutiveTime, Duration.ofMinutes(60));
+        
+        assertTrue(agenda.isFreeFor(consecutive), 
+                "Devrait être libre pour un événement consécutif");
     }
 }
